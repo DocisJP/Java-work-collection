@@ -1,0 +1,168 @@
+//----------------------Services Class----------------------------------------
+package Servicios;
+
+import Entidades.Ahorcado;
+import java.util.Scanner;
+
+public class AhorcadoService {
+
+    private Scanner sc = new Scanner(System.in).useDelimiter("\n");
+
+    public Ahorcado crearJuego() {
+        System.out.println("Ingresar la palabra para jugar");
+        String palabra = sc.next();
+        String palabraABuscar[] = new String[palabra.length()];
+        for (int i = 0; i < palabra.length(); i++) {
+            palabraABuscar[i] = palabra.substring(i, i + 1);
+        }
+
+        //int largoDePalabra = palabra.length();
+        System.out.println("Ingresar la cantidad de turnos");
+        int turnos = sc.nextInt();
+
+        return new Ahorcado(palabraABuscar, turnos);
+    }
+
+    /*Método longitud(): muestra la longitud de la palabra que se debe encontrar.
+    Nota: buscar como se usa el vector.length*/
+    public void mostrarLongitud(Ahorcado a) {
+        System.out.println("La longitud del vector es: " + a.getPalabraABuscar().length);
+    }
+
+    //Método buscar(letra):  este método recibe una letra dada por el usuario y
+    //busca si la letra ingresada es parte de la palabra o no. 
+    //También informará si la letra estaba o no.
+    public void buscarLetra(Ahorcado a,String letra) {
+        
+        int cont = 0;
+        for (int i = 0; i < a.getPalabraABuscar().length; i++) {
+            if (letra.equals(a.getPalabraABuscar()[i])){
+                cont++;
+                System.out.print("Se encontro : " + a.getPalabraABuscar()[i] + " " + (i+1));
+            }
+        }
+        if (cont == 0) {
+            System.out.println("No se encontro ningun match, como en tu Tinder");
+
+        } else {
+            System.out.println("La cantidad de letras encontras es: " + " " +cont);
+        }
+    }
+
+//    Método encontradas(letra):  que reciba una letra ingresada por el usuario y 
+//    muestre cuantas letras han sido encontradas y cuántas le faltan. Este método además deberá devolver true si la letra estaba 
+//    y false si la letra no estaba, ya que, cada vez que se busque una letra que no esté, se le restará uno a sus oportunidades.
+    
+    public boolean letrasEncontradas(Ahorcado a, String letra){
+        int cont = 0;
+        for (int i = 0; i < a.getPalabraABuscar().length; i++) {
+            if (letra.equals(a.getPalabraABuscar()[i])) {
+                System.out.println(a.getPalabraABuscar()[i]);
+                cont++;
+            }
+        }
+        a.setLetrasEncontradas(cont + a.getLetrasEncontradas());
+        System.out.println("Numero de letras encontradas: " + a.getLetrasEncontradas());
+        System.out.println("Numero de letras faltantes: " + (a.getPalabraABuscar().length - a.getLetrasEncontradas()));
+        
+        // definiendo la variable de retorno
+        if (cont>0 ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    //Método intentos(): para mostrar cuántas oportunidades le queda al jugador.
+    public void mostrarIntentos(Ahorcado a){
+        System.out.println("Le quedan " + a.getCantidadJugadasMaximas());
+           
+    }
+    
+//    Método juego(): el método juego se encargará de llamar todos los métodos previamente mencionados e 
+//            informará cuando el usuario descubra toda la palabra o se quede sin intentos. 
+//            Este método se llamará en el main.
+    
+    public void juego (){
+        String letra;
+        Ahorcado a = crearJuego();
+        do {
+            mostrarLongitud(a);
+            System.out.println("Que letra desea buscar");
+            letra = sc.next();
+            buscarLetra(a,letra);
+            boolean intentos = letrasEncontradas(a,letra);
+            if (!intentos) {
+                a.setCantidadJugadasMaximas(a.getCantidadJugadasMaximas()-1); 
+            }
+            mostrarIntentos(a);
+        } while (a.getCantidadJugadasMaximas()>0);
+        
+    }
+}
+
+//-----------------------Entity----------------------------
+package Entidades;
+
+/**
+ *
+ * @author godoy
+ */
+public class Ahorcado {
+    private String [] palabraABuscar;
+    private int letrasEncontradas;
+    private int cantidadJugadasMaximas;
+
+    public Ahorcado(String[] palabraABuscar,  int cantidadJugadasMaximas) {
+        this.palabraABuscar = palabraABuscar;
+        this.cantidadJugadasMaximas = cantidadJugadasMaximas;
+    }
+
+    
+    public Ahorcado() {
+    }
+
+    public String[] getPalabraABuscar() {
+        return palabraABuscar;
+    }
+
+    public void setPalabraABuscar(String[] palabraABuscar) {
+        this.palabraABuscar = palabraABuscar;
+    }
+
+    public int getLetrasEncontradas() {
+        return letrasEncontradas;
+    }
+
+    public void setLetrasEncontradas(int letrasEncontradas) {
+        this.letrasEncontradas = letrasEncontradas;
+    }
+
+    public int getCantidadJugadasMaximas() {
+        return cantidadJugadasMaximas;
+    }
+
+    public void setCantidadJugadasMaximas(int cantidadJugadasMaximas) {
+        this.cantidadJugadasMaximas = cantidadJugadasMaximas;
+    }
+    
+    
+}
+//------------------------Main--------------------------------
+package ejerciciosextrasclasedeutilidades;
+
+import Servicios.AhorcadoService;
+ublic class EjerciciosExtrasClaseDeUtilidades {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+       
+       
+       
+       AhorcadoService play = new AhorcadoService();
+       play.juego();
+    }
+    
+}
