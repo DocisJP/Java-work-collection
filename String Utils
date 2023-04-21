@@ -1,0 +1,167 @@
+//----------Main--------------
+package clasesdeutilidadejercicios;
+
+
+import Servicios.CadenaServicio;
+import java.util.Scanner;
+
+
+/**
+ *
+ * @author godoy
+ */
+public class ClasesDeUtilidadEjercicios {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        CadenaServicio cs = new CadenaServicio();
+        cs.c1("Un perro toma sol en un día soleado");
+        cs.mostrarVocales();
+        cs.invertirFrase();
+        cs.compararLongitud("El gato lo miraba desde lejos");
+        cs.unirFrase("El gato lo miraba desde lejos");
+        cs.reemplazar();
+        cs.contiene("a");
+        
+        CadenaServicio cs1 = new CadenaServicio();
+        System.out.println("Ingresar la frase que desea utilizar");
+        Scanner sc = new Scanner(System.in).useDelimiter("\n");
+        String fraseAgregada = sc.next();
+        cs1.c1(fraseAgregada);
+        cs1.mostrarVocales();
+        cs1.invertirFrase();
+        System.out.println("Ingresar la frase que desea comparar");
+        String fraseComparar = sc.next();
+        cs1.compararLongitud(fraseComparar);
+        cs1.unirFrase(fraseComparar);
+        cs1.reemplazar();
+        System.out.println("Ingresar el caracter que desea ver si esta siendo contendio en el texo");
+        String caracter = sc.next();
+        cs1.contiene(caracter);
+        
+    }
+    
+}
+
+//-----------Entity---------------------------------
+package Entidad;
+
+/**
+ *
+ * @author godoy
+ */
+public class Cadena {
+    private String frase;
+    private int longitud;
+
+
+    public Cadena(String frase) {//saque el int longitud
+        this.frase = frase;
+        this.longitud = frase.length();
+    }
+
+    public Cadena() {
+    }
+    
+
+    public String getFrase() {
+        return frase;
+    }
+
+    public void setFrase(String frase) {
+        this.frase = frase;
+        this.longitud = frase.length();
+    }
+
+    public int getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(int longitud) {
+        this.longitud = longitud;
+    }
+    
+    
+}
+
+//------------ServiceClass----------------------
+package Servicios;
+
+import Entidad.Cadena;
+import java.util.Scanner;
+
+/**
+ *
+ * @author godoy
+ */
+public class CadenaServicio {
+    private final Cadena c = new Cadena();
+    
+    public void c1(String frase){
+        //Scanner sc = new Scanner(System.in).useDelimiter("\n");
+        //System.out.println("Ingrese la frase que desea utilizar");
+        c.setFrase(frase);
+        c.setLongitud(frase.length());
+        //int longitud = frase.length();
+        //return new Cadena(frase);//sacamos la longitud
+    }
+    
+    public void mostrarVocales(){
+        int contador = 0;
+        String vocales = "aeiouAEIOU";
+        for (int i = 0; i < c.getLongitud(); i++) {
+            char letra = c.getFrase().charAt(i);
+            if (vocales.indexOf(letra)!= -1) {
+                contador++;
+            }
+        }
+        System.out.println("La frase tiene " + contador + " vocales");
+    }
+    
+    public void invertirFrase(){
+        
+        String invertida = "";
+        for (int i = c.getLongitud()-1; i > -1; i--) {
+            invertida+= c.getFrase().charAt(i);  
+        }
+        System.out.println("La frase invertida es: " + invertida);
+    }
+    
+    public void compararLongitud(String frase){
+        int longitud1=c.getLongitud();
+        int longitud2=frase.length();
+        
+        if (longitud1 == longitud2) {
+            System.out.println("Las frases tienen la misma longitud");
+        } else if(longitud1>longitud2){
+            System.out.println("La primera frase es mas larga que la segunda");
+        } else {
+            System.out.println("La segunda frase es mas larga que la primera");
+        }
+    }
+    public void unirFrase(String frase){
+        String unida = c.getFrase() + frase;
+        System.out.println("La frase resultante es: " + " " + unida);
+    }
+    
+    public void reemplazar(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Ingrese el caractere que desea utilizar para reemplazar la letra a");
+        String letra = sc.nextLine();
+        String reemplazada = c.getFrase().replace('a', letra.charAt(0));
+        System.out.println("La frase resultante es : " + reemplazada);
+        
+    }
+    
+    public void contiene(String letra) {
+        boolean contiene = c.getFrase().contains(letra);
+        if (contiene) {
+            System.out.println("La frase contiene la letra '" + letra + "'");
+        } else {
+            System.out.println("La frase no contiene la letra '" + letra + "'");
+        }
+    }
+    
+}
