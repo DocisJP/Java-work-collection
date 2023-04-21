@@ -1,0 +1,116 @@
+//-------------------MAIN-----------------
+package clasesdeutilidadejercicios;
+
+import Entidad.ParDeNumeros;
+import Servicios.ParDeNumerosService;
+
+/**
+ *
+ * @author godoy
+ */
+public class MetodoStaticYClaseMath {
+public static void main(String[] args) {
+
+    ParDeNumerosService mm = new ParDeNumerosService();
+    ParDeNumeros m1 = new ParDeNumeros();
+    mm.mostarNumeros(m1);
+    double n = mm.devolverMayor(m1);
+    System.out.println(n);
+    double potencia = mm.devolverPotencia(m1);
+    System.out.println(potencia);
+    double raiz = mm.devolverRaiz(m1);
+    System.out.println(raiz);
+    
+    
+    
+  
+   
+}
+}
+
+//------------Entity--------------------------
+package Entidad;
+
+/**
+ *
+ * @author godoy
+ */
+public class ParDeNumeros {
+    private double n1;
+    private double n2;
+
+    public ParDeNumeros(double n1, double n2) {
+        this.n1 = n1;
+        this.n2 = n2;
+    }
+
+    public ParDeNumeros() {
+        n1 = Math.random()*10+1;
+        n2 = Math.random()*10+1;
+    }
+
+    public double getN1() {
+        return n1;
+    }
+
+    public void setN1(double n1) {
+        this.n1 = n1;
+    }
+
+    public double getN2() {
+        return n2;
+    }
+
+    public void setN2(double n2) {
+        this.n2 = n2;
+    }
+    
+    
+}
+
+//--------------ServiceClass--------------------
+package Servicios;
+
+import Entidad.ParDeNumeros;
+
+/**
+ *
+ * @author godoy
+ */
+public class ParDeNumerosService {
+
+    
+   
+
+    public void mostarNumeros(ParDeNumeros nums) {
+        System.out.println("El primero numero guardados es: " + nums.getN1());
+        System.out.println("El segundo numero guardado es: " + nums.getN2());
+    }
+
+    public double devolverMayor(ParDeNumeros nums) {
+        if (nums.getN1() > nums.getN2()) {
+            System.out.println("El primer numero es mayor al segundo número");
+            return nums.getN1();
+        } else if (nums.getN1() < nums.getN2()) {
+            System.out.println("El segundo numero es mayor al primer número");
+            return nums.getN2();
+
+        } else {
+            return 0;
+        }
+    }
+
+    public double devolverPotencia(ParDeNumeros nums) {
+        double mayor = devolverMayor(nums);
+        double menor = (mayor == nums.getN1()) ? nums.getN2() : nums.getN1();
+        mayor = Math.round(mayor);
+        menor = Math.round(menor);
+        return Math.pow(mayor, menor);
+    }
+    
+    public double devolverRaiz(ParDeNumeros nums) {
+        double menor = (devolverMayor(nums) == nums.getN1()) ? nums.getN2() : nums.getN1();
+        menor = Math.abs(menor);
+        return Math.sqrt(menor);
+    }
+}
