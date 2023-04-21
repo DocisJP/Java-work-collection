@@ -1,0 +1,165 @@
+//------------Main-----------------
+package cocina;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+/**
+ *
+ * @author godoy
+ */
+public class Cocina {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in).useDelimiter("\n");
+        ArrayList<Receta> rct = new ArrayList();
+        NuevaReceta nrct = new NuevaReceta();
+      
+        Receta r1 = new Receta ("Pastel de carne","carne picada", "papa", "una", "Sal y pimienta");
+        Receta r2 = new Receta ("Milanes con pure","nalga", "papa", "una", "sal");
+        Receta r3 = new Receta ("Ensalada Cesar","pollo y anchoas ", "Lechuga romana", "una", "queso parmesano, salsa perrins, aceite de oliva, mostaza y ajo");
+        Receta r4 = new Receta ("Desayuno Americano","huevos y panceta", "ninguna", "una", "con o sin sal a gusto");
+        
+        rct.add(r1);
+        rct.add(r2);
+        rct.add(r3);
+        rct.add(r4);
+        
+        for (int i = 0; i < rct.size(); i++) {
+            System.out.println(rct.get(i).toString());
+            System.out.println();
+        }
+        
+        
+        
+        
+        System.out.println("¿Como se llama la receta que desea encontrar?");
+        String nombreReceta = sc.next();
+       
+            for (int i = 0; i < rct.size(); i++) {
+                if (rct.get(i).nombre.equalsIgnoreCase(nombreReceta)){
+                    System.out.println("Se encontro su receta! Su receta es: " + rct.get(i).toString());
+                }
+                else {
+                    System.out.println("No se encontró su receta!");
+                }
+            }
+            
+        
+        nrct.agregarReceta();
+        nrct.mostrarReceta();
+        
+       
+       
+        
+        
+        }
+    }
+    
+    //-------------------ServiceClass----------------------
+    package cocina;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+/**
+ *
+ * @author godoy
+ */
+public class NuevaReceta {
+    ArrayList<String> nuevaReceta = new ArrayList();
+
+    public NuevaReceta() {
+    }
+
+    public ArrayList<String> getNuevaReceta() {
+        return nuevaReceta;
+    }
+
+    public void setNuevaReceta(ArrayList<String> nuevaReceta) {
+        this.nuevaReceta = nuevaReceta;
+    }
+    
+    public void mostrarReceta() {
+        for (int i = 0; i < nuevaReceta.size(); i++) {
+            System.out.println(nuevaReceta.get(i));
+            
+        }
+    }
+    
+    public void agregarReceta(){
+        Scanner sc = new Scanner(System.in).useDelimiter("\n");
+        System.out.println("¿Cuantas recetas desea ingresar?");
+       int n = sc.nextInt();
+        for (int i = 0; i < n; i++) {
+            System.out.println("¿como se llama la receta?");
+            String nombre = sc.next();
+            nuevaReceta.add(nombre);
+            System.out.println("¿Qué carne utiliza?");
+            String carnes = sc.next();
+            nuevaReceta.add(carnes);
+            System.out.println("¿Qué verduras utiliza?");
+            String verduras = sc.next();
+            nuevaReceta.add(verduras);
+            System.out.println("¿Cuál es la cantidad de porciones?");
+            String cantidad = sc.next();
+            nuevaReceta.add(cantidad);
+            System.out.println("¿Qué condimentos lleva?");
+            String condimentos = sc.next();
+            nuevaReceta.add(condimentos);
+           
+    }
+}
+
+    @Override
+    public String toString() {
+        return "NuevaReceta{" + " nuevaReceta = " + nuevaReceta + '}';
+    }
+    
+    }
+  
+  
+  //--------------------Entity---------------------------
+    package cocina;
+
+
+
+
+
+/**
+ *
+ * @author godoy
+ */
+public class Receta {
+    String nombre;
+    String carnes;
+    String verduras;
+    String cantidad;
+    String condimentos;
+    int n;
+    
+    
+    
+
+    public Receta(String nombre, String carnes, String verduras, String cantidad, String condimentos) {
+        this.nombre = nombre;
+        this.carnes = carnes;
+        this.verduras = verduras;
+        this.cantidad = cantidad;
+        this.condimentos = condimentos;
+    }
+
+    public Receta() {
+    }
+
+    @Override
+    public String toString() {
+        return "Receta{"+ "nombre = " + nombre + "\ncarnes = " + carnes + ", \nverduras = " + verduras + ", \ncantidad = " + cantidad + ", \ncondimentos = " + condimentos + '}';
+    }
+    
+    
+    
+ }  
