@@ -1,0 +1,117 @@
+//------------------MAIN----------------------------
+import Servicios.ArregloService;
+
+public class ArrayUtils {
+    
+    public static void main (String[] args){
+        double [] A = new double [50];
+        double [] B = new double [20];
+        
+        ArregloService servicio = new ArregloService();
+        servicio.inicializarA(A);
+        servicio.mostrar(A);
+        servicio.ordenar(A);
+        servicio.mostrar(A);
+        
+        //servicio.ordenarYMostrar(A);
+        
+       //servicio.convirtiendoYOrdenando(A);
+       //servicio.convirtiendoYOrdenando2(A);
+       servicio.inicialiarB(A, B);
+       servicio.mostrar(B);
+    }
+}
+
+//-------------ServiceClass-------------------------
+package Servicios;
+
+import java.util.Arrays;
+import java.util.Random;
+
+/**
+ *
+ * @author godoy
+ */
+public class ArregloService {
+
+    public void inicializarA(double[] arreglo) {
+        Random random = new Random();
+        for (int i = 0; i < arreglo.length; i++) {
+            arreglo[i] = random.nextDouble() * 11;
+        }
+    }
+
+    public void mostrar(double[] arreglo) {
+        System.out.println(Arrays.toString(arreglo));
+    }
+
+    public void ordenar(double[] arreglo) {
+        Arrays.sort(arreglo);
+        for (int i = 0; i < arreglo.length / 2; i++) {
+            double temp = arreglo[i];
+            arreglo[i] = arreglo[arreglo.length - 1 - i];
+            arreglo[arreglo.length - 1 - i] = temp;
+        }
+    }
+
+    public void ordenarYMostrar(double[] arreglo) {
+        Arrays.sort(arreglo);
+        for (double d : arreglo) {
+            System.out.println(d);
+        }
+    }
+
+    public void convirtiendoYOrdenando(double[] arreglo) {
+        Arrays.sort(arreglo);
+        double aux = 0;
+        for (int i = 0; i < arreglo.length - 1; i++) {
+            for (int j = 0; j < arreglo.length - i - 1; j++) {
+                if (arreglo[j] < arreglo[j + 1]) {
+                    aux = arreglo[j];
+                    arreglo[j] = arreglo[j + 1];
+                    arreglo[j + 1] = aux;
+                }
+
+            }
+        }
+        System.out.println(Arrays.toString(arreglo));
+    }
+
+    public void convirtiendoYOrdenando2(double[] arreglo) {
+        Arrays.sort(arreglo);
+        for (int i = 0; i < arreglo.length / 2; i++) {
+            double temp = arreglo[i];
+            arreglo[i] = arreglo[arreglo.length - 1 - i];
+            arreglo[arreglo.length - 1 - i] = temp;
+        }
+        for (double d : arreglo) {
+            System.out.println(d);
+        }
+
+    }
+
+    public void inicialiarB(double[] A, double[] B) {
+        for (int i = 0; i < B.length; i++) {
+            if (i < 10) {
+                B[i] = A[i];
+            } else {
+                B[i] = 0.5;
+            }
+        }
+    }
+
+    //Se crea el vector B dentro del metodo, se inicializa acá adentro.
+    public double[] inicializarB(double[] A) {
+        double B[] = Arrays.copyOf(A, 20);
+        Arrays.fill(B, 10, 20, 0.5);
+        return B;
+    }
+
+    //Otra forma de utilizar el arrays.copyof y el arrays.fill
+    public void inicializarB(double[] b, double[] a) {
+        double[] arregloVac = new double[20];
+        arregloVac = Arrays.copyOf(a, 19);
+        Arrays.fill(arregloVac, 10, 19, 0.5);
+        System.out.println(Arrays.toString(arregloVac));
+    }
+}
