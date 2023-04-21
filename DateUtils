@@ -1,0 +1,113 @@
+//-------------Main---------------
+package clasesdeutilidadejercicios;
+
+import Entidad.Persona;
+import Servicios.PersonaService;
+
+public class Ejercicio5 {
+    public static void main (String [] args){
+        int edad = 18;
+        Persona p = PersonaService.crearPersona();
+        System.out.println("Edad: " + PersonaService.calcularEdad(p));
+        System.out.println("Es menor a "+ edad + "?" + PersonaService.menorQue(p, edad));
+        PersonaService.mostrarPersona(p);
+    }
+}
+
+//-----------Entity------------------
+package Entidad;
+
+import java.util.Date;
+
+/**
+ *
+ * @author godoy
+ */
+public class Persona {
+
+    private String nombre;
+    private Date fechaNac;
+
+    public Persona() {
+    }
+
+    public Persona(String nombre, Date fechaNac) {
+        this.nombre = nombre;
+        this.fechaNac = fechaNac;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Date getFechaNac() {
+        return fechaNac;
+    }
+
+    public void setFechaNac(Date fechaNac) {
+        this.fechaNac = fechaNac;
+    }
+
+}
+
+//-----------------ServiceClass------------------
+package Servicios;
+
+import Entidad.Persona;
+import java.util.Date;
+import java.util.Scanner;
+
+/**
+ *
+ * @author godoy
+ */
+public class PersonaService {
+    public static Persona crearPersona() {
+
+        Scanner leer = new Scanner(System.in).useDelimiter("\n");
+        System.out.println("Ingrese el nombre: ");
+        String nombre = leer.next();
+        System.out.println("Ingrese día de nacimiento: ");
+        int dia = leer.nextInt();
+        System.out.println("Ingrese mes de nacimiento: ");
+        int mes = leer.nextInt();
+        System.out.println("Ingrese año de nacimiento: ");
+        int anio = leer.nextInt();
+        Date fechaNac = new Date(anio, mes, dia);
+
+        return new Persona(nombre, fechaNac);
+    }
+
+    public static int calcularEdad(Persona p) {
+        int diferencia;
+        Date act = new Date();
+        diferencia = act.getYear() - p.getFechaNac().getYear();
+        if (act.getMonth() < p.getFechaNac().getMonth()) {
+            diferencia--;
+        } else if (act.getMonth() == p.getFechaNac().getMonth()) {
+            if (act.getDay() < p.getFechaNac().getDay()) {
+                diferencia--;
+            }
+        }
+        return diferencia;
+    }
+
+    public static boolean menorQue(Persona p, int edad) {
+
+        if (PersonaService.calcularEdad(p) < edad) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public static void mostrarPersona(Persona p) {
+        System.out.println("Nombre: " + p.getNombre());
+        System.out.println("Fecha de nacimiento: " + p.getFechaNac().getDate()+ "/" + p.getFechaNac().getMonth() + "/" + p.getFechaNac().getYear());
+    }
+}
